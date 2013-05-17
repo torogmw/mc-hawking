@@ -1,0 +1,7 @@
+MC Hawking turns text input to rap in Dr Stephen Hawking's voice automagically! You need to have Mac OSX and MaxMSP to run the program.
+
+Open up main.maxpat and run "python udp_loop.py" from terminal. Follow the two steps in main.maxpat. You can prepare your own lyrics by creating messages in MaxMSP or change the backup music by replacing "drum_1bar.wav".
+
+Enjoy the hilarious output!
+
+Ruofeng Chen
