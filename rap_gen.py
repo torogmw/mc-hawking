@@ -48,6 +48,7 @@ def time_stretch_half(dafxin):
     return dafxout
 
 def synth(words, voice="Fred"):
+    print words
     for word in words:
         fullcmd = ['say', '-v', voice, '-o', synth_path+'/'+str(hash(word))+'.wav', '--data-format=LEI16@44100', word]
         subprocess.check_output(fullcmd)
@@ -176,7 +177,5 @@ def from_text_to_wavfile(sentence):
 if __name__ == '__main__':
 
     # generate the audio
-    sentence = '''thank you so much for coming tonight'''
+    sentence = "hello world this is minwei"
     from_text_to_wavfile(sentence)
-
-
