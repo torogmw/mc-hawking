@@ -8,7 +8,7 @@ import random
 import pylab
 import pdb
 
-'''By Ruofeng Chen, April 2013'''
+'''By Ruofeng Chen / Minwei Gu, April 2013'''
 
 voices = ["Albert", "Bad News", "Bahh", "Bells", "Boing", "Bubbles", "Cellos", "Deranged", "Good News", "Hysterical", "Pipe Organ", "Trinoids", "Whisper", "Zarvox"]
 
@@ -35,6 +35,7 @@ pulses[16] = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
 synth_path = "./synth"
 rap_path = "./rap"
 
+
 def time_stretch_half(dafxin):
     ''''''
     hopsize = 480 # sounds good using this parameter
@@ -47,11 +48,13 @@ def time_stretch_half(dafxin):
             dafxout[n/2*hopsize:n/2*hopsize+framesize] = dafxout[n/2*hopsize:n/2*hopsize+framesize] + dafxin[n*hopsize:n*hopsize+framesize] * hannWin
     return dafxout
 
+
 def synth(words, voice="Fred"):
     print words
     for word in words:
         fullcmd = ['say', '-v', voice, '-o', synth_path+'/'+str(hash(word))+'.wav', '--data-format=LEI16@44100', word]
         subprocess.check_output(fullcmd)
+
 
 def align_to_beats(everything):
     ''' YO YO '''
@@ -63,13 +66,12 @@ def align_to_beats(everything):
     for tup in everything:
         for i in range(len(tup[1])):
             data_list.append(tup[0][tup[1][i]:tup[2][i]])
-
-    fs, rapdata = scipy.io.wavfile.read(open('drum_1bar.wav', 'r'))
+    fs, rapdata = scipy.io.wavfile.read(open('pattern_1.wav', 'r'))
     rapdata = float32(rapdata / float(2**16))
     rapdata = mean(rapdata, 1)
-    rapdata = rapdata * 0.2
+    rapdata = rapdata * 0.4
     # rapdata = zeros(total_len * 1.5) # if you don't want accompaniment
-    
+
     total_voice_len = sum([data.size for data in data_list])
     syllable_num = len(data_list)
     if syllable_num > 16:
@@ -159,6 +161,7 @@ def find_onsets_and_offsets(data):
                         offsets.pop(i-1)
                     break
     return array(onsets, int), array(offsets, int)
+
 
 def from_text_to_wavfile(sentence):
     words = sentence.split(" ")
